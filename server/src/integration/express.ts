@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 
 export default function apiServerUp(port: number) {
   app.get("/", (req, res) => {
-    res.send("Ping");
+    res.send("Pingss");
   });
 
   app.listen(port, () => console.log(`Server running on ${port}`));
