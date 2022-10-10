@@ -3,10 +3,14 @@ services:
     build:
       context: ./server
       target: dev
+      args:
+        - PORT = ${PORT}
     environment:
       NODE_ENV: development
     ports:
-      - "8000:5000"
+      - 3001:${PORT}
+      - 9229:9229
+    env_file:
+      - .env
     volumes:
       - ./server:/app
-#      - /app/node_modules

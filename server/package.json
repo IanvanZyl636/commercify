@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L",
-    "debug": "nodemon --inspect app.js",
+    "debug": "nodemon --inspect=0.0.0.0:9229 app.js",
     "build": "tsc"
   },
   "author": "",
@@ -25,6 +25,7 @@
     "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
+    "dotenv": "^16.0.3",
     "eslint": "^8.25.0",
     "eslint-config-google": "^0.14.0",
     "ts-node": "^10.9.1",

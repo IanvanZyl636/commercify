@@ -1,14 +1,17 @@
 # Stage 1: run dev
 FROM node:lts-alpine AS dev
 WORKDIR /app
-EXPOSE 5000
-CMD ["npm", "run", "start"]
+EXPOSE ${PORT}
+EXPOSE 9229
+ENV PORT ${PORT}
+CMD ["npm", "run", "debug"]
 
-## Stage 2: run build
-#FROM node:lts AS build
-#WORKDIR /app
-#COPY . .
-#RUN npm install
+# Stage 2: run build
+FROM node:lts AS build
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build
 
 ## Stage 3: run prod build
 #FROM node:lts-alpine AS prod-build
