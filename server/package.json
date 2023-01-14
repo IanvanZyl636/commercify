@@ -4,9 +4,8 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L",
-    "debug": "nodemon --inspect app.ts",
+    "debug": "nodemon --inspect=0.0.0.0:9229 ./src/app.ts",
+    "debug-node": "node --inspect=0.0.0.0:9229 ./dist/app.js",
     "build": "tsc"
   },
   "author": "",

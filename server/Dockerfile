@@ -1,9 +1,6 @@
 # Stage 1: run dev
-FROM node:lts-alpine AS dev
+FROM node:lts AS dev
 WORKDIR /app
-EXPOSE ${PORT}
-EXPOSE 9229
-ENV PORT ${PORT}
 CMD ["npm", "run", "debug"]
 
 # Stage 2: run build
