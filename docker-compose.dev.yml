@@ -1,12 +1,37 @@
 services:
-  server:
-    build:
-      context: ./server
-      target: dev
+  # server:
+  #   build:
+  #     context: ./server
+  #     target: dev
+  #   depends_on:
+  #     - mongo
+  #   ports:
+  #     - ${SERVER_PORT}:${SERVER_PORT}
+  #     - 9229:9229
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./server:/app
+  mongo:
+    image: mongo
+    restart: always
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
-    env_file:
-      - .env
+      - 27017:27017
     volumes:
-      - ./server:/app
+      - ./database:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command: [--auth]
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${DB_ROOT_USERNAME}:${DB_ROOT_PASSWORD}@mongo:27017/
