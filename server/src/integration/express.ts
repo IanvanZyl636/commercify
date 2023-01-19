@@ -1,18 +1,22 @@
 import express from "express";
-import accountApiEndpoints from "../api-endpoints/account/account";
+import accountRouterInit from "../api-endpoints/account/account";
 
-export const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const app = express();
 
 export default function apiServerUp(port: number) {
-  accountApiEndpoints();
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-  app.get("/", (req, res) => {
-    debugger;
-    res.send("Pinsg");
-  });
+  setupRoutes();
 
   app.listen(port, () => console.log(`Server running on ${port}`));
 }
+
+const setupRoutes = () => {
+  app.use("/account", accountRouterInit());
+
+  app.get("/ping", (req, res) => {
+    debugger;
+    res.send("Ping");
+  });
+};
