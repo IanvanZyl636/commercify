@@ -13,6 +13,7 @@ export default async function apiServerUp(port: number) {
 
       app.listen(port, () => {
         console.log(`Server running on ${port}`);
+        resolve();
       });
     } catch (error) {
       throw error;
@@ -24,7 +25,6 @@ const setupRoutes = () => {
   app.use("/account", accountRouterInit());
 
   app.get("/ping", (req, res) => {
-    debugger;
     res.send("Ping");
   });
 };

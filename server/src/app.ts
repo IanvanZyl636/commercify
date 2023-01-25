@@ -10,7 +10,6 @@ const port = Number(process.env.SERVER_PORT) || 5000;
     );
 
     await apiServerUp(port);
-    console.log("aopsdoaspkdoasdasndasjklndj");
   } catch (error) {
     console.error(error);
   }
