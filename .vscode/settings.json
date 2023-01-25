@@ -1,0 +1,13 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "envPath": "http://localhost:"
+    },
+    "$local": {
+      "envPath": "http://localhost:"
+    },
+    "$production": {
+      "envPath": "http://localhost:"
+    }
+  }
+}

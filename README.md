@@ -11,7 +11,7 @@ DB_ROOT_PASSWORD=xxxx
 
 DEBUGGING
 
-Go to localhost:9229/json and copy "devtoolsFrontendUrl" in a new browser
+Go to http://localhost:9229/json and copy "devtoolsFrontendUrl" in a new browser
 src: https://www.becomebetterprogrammer.com/how-to-debug-node-js-with-typescript-using-nodemon/
 
 MONGO DB TROUBLESHOOT CONFIG(add role of root):

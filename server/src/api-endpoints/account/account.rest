@@ -1,0 +1,3 @@
+@path={{envPath}}{{$dotenv SERVER_PORT}}/account
+
+POST {{path}}/register
