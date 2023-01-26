@@ -3,6 +3,7 @@ services:
     build:
       context: ./server
       target: dev
+    restart: always
     depends_on:
       - mongo
     ports:

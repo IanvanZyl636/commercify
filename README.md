@@ -25,3 +25,9 @@ db.createUser(
   }
 )
 ```
+
+REST API
+
+```
+Content-Type. Some common examples of content types are “text/plain”, “application/xml”, “text/html”, “application/json”, “image/gif”, and “image/jpeg”
+```

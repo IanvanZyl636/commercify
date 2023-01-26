@@ -5,11 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Docker: Attach to Node",
       "type": "node",
       "request": "attach",
-      "name": "Node: Nodemon",
-      "processId": "${command:PickProcess}",
       "restart": true,
+      "sourceMaps": true,
+      "port": 5858,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/server",
+      "remoteRoot": "/app",
       "protocol": "inspector"
     }
   ]

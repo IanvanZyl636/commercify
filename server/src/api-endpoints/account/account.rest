@@ -1,3 +1,8 @@
 @path={{envPath}}{{$dotenv SERVER_PORT}}/account
 
 POST {{path}}/register
+Content-Type: application/json
+
+{
+    "name":"Ian"
+}
