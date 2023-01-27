@@ -1,5 +1,6 @@
 services:
   server:
+    image: server
     build:
       context: ./server
       target: dev

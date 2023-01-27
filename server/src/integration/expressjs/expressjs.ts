@@ -1,7 +1,14 @@
 import express from "express";
-import accountRouterInit from "../../api-endpoints/account/account";
+import accountRouterInit from "./api-endpoints/account/account";
+import { RouterModel } from "./models/router.model";
 
 const app = express();
+
+const routers: RouterModel[] = [accountRouterInit()];
+
+const setupRoutes = () => {
+  routers.forEach((router) => app.use(router.path, router.router));
+};
 
 export default async function apiServerUp(port: number) {
   return new Promise<void>((resolve) => {
@@ -10,6 +17,10 @@ export default async function apiServerUp(port: number) {
       app.use(express.urlencoded({ extended: true }));
 
       setupRoutes();
+
+      app.get("/ping", (req, res) => {
+        res.send("Ping");
+      });
 
       app.listen(port, () => {
         console.log(`Server running on ${port}`);
@@ -20,11 +31,3 @@ export default async function apiServerUp(port: number) {
     }
   });
 }
-
-const setupRoutes = () => {
-  app.use("/account", accountRouterInit());
-
-  app.get("/ping", (req, res) => {
-    res.send("Ping");
-  });
-};
