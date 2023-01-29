@@ -1,7 +1,6 @@
+import { RouterModel } from "@common/models/router.model";
 import express from "express";
 import jwt from "jsonwebtoken";
-import validEmail from "../../../../common/helpers/email.helper";
-import { RouterModel } from "../../models/router.model";
 import registerRoute from "./register/register";
 
 export default function accountRouterInit(): RouterModel {

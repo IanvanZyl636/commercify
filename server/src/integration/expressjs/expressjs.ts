@@ -1,6 +1,6 @@
 import express from "express";
 import accountRouterInit from "./api-endpoints/account/account";
-import { RouterModel } from "./models/router.model";
+import { RouterModel } from "../../common/models/router.model";
 
 const app = express();
 
