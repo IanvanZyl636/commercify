@@ -1,31 +1,41 @@
+import { PasswordStrengthRegex } from "@common/enums/password-strength.enum";
 import { z } from "zod";
 
-const registerSchema = z.object({
-  email: z
-    .string({
-      required_error: "Email is required",
-    })
-    .email(),
-  password: z
-    .string({
-      required_error: "Password is required",
-    })
-    .regex(/^(?=(.*[a-z]){3,})$/, "Password requires 3 lowercase letters")
-    .regex(/^(?=(.*[A-Z]){2,})$/, "Password requires 2 uppercase letters")
-    .regex(/^(?=(.*[0-9]){2,})$/, "Password requires 2 number")
-    .regex(
-      /^(?=(.*[!@#$%^&*()\-__+.]){1,})$/,
-      'Password requires 1 of these special characters "!@#$%^&*()-__+."'
-    )
-    .regex(/^.{8,}$/, "Password requires 8 or more characters"),
-  firstName: z.string({
-    required_error: "First name is required",
-  }),
-  middleName: z.string().optional(),
-  surname: z.string({
-    required_error: "Surname is required",
-  }),
-});
+const registerSchema = z
+  .object({
+    email: z.string().email().max(30),
+    password: z
+      .string()
+      .regex(
+        new RegExp(PasswordStrengthRegex.lowerCaseCharacters),
+        "Password requires atleast 1 lowercase letters"
+      )
+      .regex(
+        new RegExp(PasswordStrengthRegex.upperCaseCharacters),
+        "Password requires atleast 1 uppercase letters"
+      )
+      .regex(
+        new RegExp(PasswordStrengthRegex.numberCharacters),
+        "Password requires atleast 2 number"
+      )
+      .regex(
+        new RegExp(PasswordStrengthRegex.specialCharacters),
+        'Password requires 1 of these special characters "#$@!%&*?"'
+      )
+      .regex(
+        new RegExp(PasswordStrengthRegex.limitAmountCharacter),
+        "Password requires 8 or more characters"
+      ),
+    firstName: z
+      .string()
+      .regex(/^\p{L}( \p{L}+)*$/u)
+      .trim()
+      .min(2)
+      .max(30),
+    middleName: z.string().optional(),
+    surname: z.string().trim().min(2).max(30),
+  })
+  .strict();
 
 export type registerModel = z.infer<typeof registerSchema>;
 
