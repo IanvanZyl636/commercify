@@ -9,6 +9,6 @@ export default function registerRoute(router: Router) {
     const { middleName, email, password, firstName, surname } =
       registerSchemaResult;
 
-    res.send(email);
+    res.send(firstName);
   });
 }

@@ -1,4 +1,4 @@
-import { PasswordStrengthRegex } from "@common/enums/password-strength.enum";
+import { PasswordStrengthRegex } from "@common/regex/password-strength.regex";
 import { z } from "zod";
 
 const registerSchema = z
@@ -26,13 +26,8 @@ const registerSchema = z
         new RegExp(PasswordStrengthRegex.limitAmountCharacter),
         "Password requires 8 or more characters"
       ),
-    firstName: z
-      .string()
-      .regex(/^\p{L}( \p{L}+)*$/u)
-      .trim()
-      .min(2)
-      .max(30),
-    middleName: z.string().optional(),
+    firstName: z.string().trim().min(2).max(30),
+    middleName: z.string().trim().min(2).max(30).optional(),
     surname: z.string().trim().min(2).max(30),
   })
   .strict();
