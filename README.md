@@ -55,3 +55,39 @@ Rules
 {8,}                            indicates that you want 8 or more
 $
 ```
+
+GOOGLE OAUTH 2.0
+
+```
+https://www.youtube.com/watch?v=Qt3KJZ2kQk0&ab_channel=TomDoesTech
+```
+
+Dynamic keys type with intellisense
+
+```
+export type McbTabConfigType<T> = {
+  [key in keyof T & string]:McbTabConfigModel
+}
+
+export interface McbTabConfigModel
+{
+  route:string;
+  title:string;
+  component:Type<McbTabComponent>;
+}
+
+export const PAYMENTS_TABS:McbTabConfigType<{test1:McbTabConfigModel,test2:McbTabConfigModel}> = {
+  test1: {
+    route: 'test1',
+    title: 'Test1',
+    component: McbTabComponent
+  },
+  test2: {
+    route: 'test2',
+    title: 'Test2',
+    component: McbTabComponent
+  }
+}
+
+ (Object.keys(PAYMENTS_TABS) as [keyof typeof PAYMENTS_TABS]).map((key) => ({path: PAYMENTS_TABS[key].route, component:PAYMENTS_TABS[key].component}))
+```
