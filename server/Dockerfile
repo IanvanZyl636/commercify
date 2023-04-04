@@ -4,11 +4,11 @@ WORKDIR /app
 CMD ["npm", "run", "debug"]
 
 # Stage 2: run build
-FROM node:lts AS build
-WORKDIR /app
-COPY . .
-RUN npm install
-RUN npm run build
+# FROM node:lts AS build
+# WORKDIR /app
+# COPY . .
+# RUN npm install
+# RUN npm run build
 
 ## Stage 3: run prod build
 #FROM node:lts-alpine AS prod-build
