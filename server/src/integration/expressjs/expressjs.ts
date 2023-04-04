@@ -1,4 +1,4 @@
-import express from "express";
+import express, { ErrorRequestHandler } from "express";
 import accountRouterInit from "./api-endpoints/account/account";
 import { RouterModel } from "../../common/models/router.model";
 
@@ -8,6 +8,14 @@ const routers: RouterModel[] = [accountRouterInit()];
 
 const setupRoutes = () => {
   routers.forEach((router) => app.use(router.path, router.router));
+};
+
+const errorLogger: ErrorRequestHandler<any> = (error, request, response, next) => {
+  console.error(`error ${error.message}`);
+
+  response.header("Content-Type", "application/json");
+  const status = error.statusCode || 400;
+  response.status(status).send("Something Broke!");
 };
 
 export default async function apiServerUp(port: number) {
@@ -26,6 +34,8 @@ export default async function apiServerUp(port: number) {
         console.log(`Server running on ${port}`);
         resolve();
       });
+
+      app.use(errorLogger);
     } catch (error) {
       throw error;
     }

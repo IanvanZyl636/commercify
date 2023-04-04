@@ -1,5 +1,6 @@
 @path={{envPath}}{{$dotenv SERVER_PORT}}/account
 
+
 POST {{path}}/register
 Content-Type: application/json
 
@@ -8,4 +9,13 @@ Content-Type: application/json
     "password":"U!6kbm7yG3lN",    
     "firstName":"   Rë   en  ",
     "surname":"Doe"
+}
+
+###
+
+POST {{path}}/google
+Content-Type: application/json
+
+{
+    "code":"asdasd"
 }

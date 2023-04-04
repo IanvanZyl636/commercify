@@ -91,3 +91,5 @@ export const PAYMENTS_TABS:McbTabConfigType<{test1:McbTabConfigModel,test2:McbTa
 
  (Object.keys(PAYMENTS_TABS) as [keyof typeof PAYMENTS_TABS]).map((key) => ({path: PAYMENTS_TABS[key].route, component:PAYMENTS_TABS[key].component}))
 ```
+
+When coding expressJS api endpoints remeber that you can throw and error with a synchronous call but with a asynchronous you need to call next() to trigger the next middleware
