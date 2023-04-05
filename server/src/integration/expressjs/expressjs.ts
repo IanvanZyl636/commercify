@@ -1,42 +1,29 @@
-import express, { ErrorRequestHandler } from "express";
+import express from "express";
 import accountRouterInit from "./api-endpoints/account/account";
 import { RouterModel } from "../../common/models/router.model";
+import errorLogger from "./middleware/error-logger.middleware";
+import rootRouterInit from "./api-endpoints/root";
 
-const app = express();
-
-const routers: RouterModel[] = [accountRouterInit()];
-
-const setupRoutes = () => {
-  routers.forEach((router) => app.use(router.path, router.router));
-};
-
-const errorLogger: ErrorRequestHandler<any> = (error, request, response, next) => {
-  console.error(`error ${error.message}`);
-
-  response.header("Content-Type", "application/json");
-  const status = error.statusCode || 400;
-  response.status(status).send("Something Broke!");
-};
+const routers: RouterModel[] = [rootRouterInit(), accountRouterInit()];
 
 export default async function apiServerUp(port: number) {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>((resolve, reject) => {
     try {
+      const app = express();
+
       app.use(express.json());
       app.use(express.urlencoded({ extended: true }));
 
-      setupRoutes();
+      routers.forEach((router) => app.use(router.path, router.router));
 
-      app.get("/ping", (req, res) => {
-        res.send("Ping");
-      });
+      app.use(errorLogger);
 
       app.listen(port, () => {
         console.log(`Server running on ${port}`);
         resolve();
       });
-
-      app.use(errorLogger);
     } catch (error) {
+      reject();
       throw error;
     }
   });

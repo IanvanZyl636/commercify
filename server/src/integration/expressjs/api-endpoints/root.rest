@@ -1,0 +1,3 @@
+@path={{envPath}}{{$dotenv SERVER_PORT}}
+
+GET {{path}}/ping

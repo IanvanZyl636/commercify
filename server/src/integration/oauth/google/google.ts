@@ -1,20 +1,16 @@
 import axios from "axios";
 import querystring from "querystring";
 
-// Define the Google OAuth2 API endpoints
 const GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
-// Define the client ID and secret for your Google API project
+const SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"];
+
 const CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_OAUTH_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_OAUTH_REDIRECT_URL;
 
-// Define the scopes that your application requires
-const SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"];
-
-// Define a function to generate the Google OAuth2 authorization URL
 function getAuthUrl(): string {
   const params = {
     client_id: CLIENT_ID,
@@ -28,7 +24,6 @@ function getAuthUrl(): string {
   return `${GOOGLE_AUTH_URL}?${query}`;
 }
 
-// Define a function to exchange the authorization code for an access token
 async function getToken(code: string): Promise<any> {
   const data = {
     client_id: CLIENT_ID,
@@ -42,7 +37,6 @@ async function getToken(code: string): Promise<any> {
   return response.data;
 }
 
-// Define a function to retrieve the user information using the access token
 async function getUserInfo(accessToken: string): Promise<any> {
   const headers = { Authorization: `Bearer ${accessToken}` };
   const response = await axios.get(GOOGLE_USERINFO_URL, { headers });
