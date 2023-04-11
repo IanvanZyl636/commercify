@@ -1,9 +1,11 @@
 import axios from "axios";
 import querystring from "querystring";
+import jwt from "jsonwebtoken";
 
 const GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
+const GOOGLE_PUBLIC_KEYS_URL = "https://www.googleapis.com/oauth2/v3/certs";
 
 const SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"];
 
@@ -34,6 +36,7 @@ async function getToken(code: string): Promise<any> {
   };
   const headers = { "Content-Type": "application/x-www-form-urlencoded" };
   const response = await axios.post(GOOGLE_TOKEN_URL, querystring.stringify(data), { headers });
+
   return response.data;
 }
 
@@ -43,6 +46,28 @@ async function getUserInfo(accessToken: string): Promise<any> {
   return response.data;
 }
 
-const googleOAuth = { getAuthUrl, getToken, getUserInfo };
+async function verifyJWT(accessToken: string) {
+  try {
+    const { data } = await axios.get<{ keys: jwt.JwtHeader[] }>(GOOGLE_PUBLIC_KEYS_URL);
+    const publicKeys = data.keys.reduce((keys: any, key) => {
+      if (!key.kid) {
+        return {};
+      }
+
+      keys[key.kid] = key;
+      return keys;
+    }, {});
+
+    // Verify access token
+    const decoded = jwt.verify(accessToken, publicKeys, {
+      algorithms: ["RS256"],
+      audience: CLIENT_ID,
+    }) as jwt.JwtPayload;
+  } catch (error) {
+    throw error;
+  }
+}
+
+const googleOAuth = { getAuthUrl, getToken, getUserInfo, verifyJWT };
 
 export default googleOAuth;

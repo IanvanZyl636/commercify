@@ -5,6 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}\\server\\node_modules\\jest\\bin\\jest.js",
+      "args": ["-i", "-c", "${workspaceRoot}/server/jest.config.ts"],
+      "preLaunchTask": "build",
+      "internalConsoleOptions": "openOnSessionStart",
+      "outFiles": ["${workspaceRoot}/server/dist/**/*"],
+      "envFile": "${workspaceRoot}/.env"
+    },
+    {
       "name": "Docker: Attach to Node",
       "type": "node",
       "request": "attach",

@@ -48,6 +48,8 @@ const controllers: Controllers<{
       const token = await googleOAuth.getToken(code);
       const userInfo = await googleOAuth.getUserInfo(token.access_token);
 
+      await googleOAuth.verifyJWT(token.access_token);
+
       res.send("Successfully authenticated with Google!");
     } catch (error) {
       //res.status(500).send("Failed to authenticate with Google.");
