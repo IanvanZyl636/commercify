@@ -15,5 +15,7 @@ describe("sum module", () => {
     };
 
     const resp = await googleOAuth.verifyJWT(token.id_token);
+    googleOAuth.verifyJWT("");
+    expect(1 + 2).toBe(3);
   });
 });

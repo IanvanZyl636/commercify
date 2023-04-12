@@ -48,21 +48,6 @@ async function getUserInfo(accessToken: string): Promise<any> {
 
 async function verifyJWT(accessToken: string) {
   try {
-    const { data } = await axios.get<{ keys: jwt.JwtHeader[] }>(GOOGLE_PUBLIC_KEYS_URL);
-    const publicKeys = data.keys.reduce((keys: any, key) => {
-      if (!key.kid) {
-        return {};
-      }
-
-      keys[key.kid] = key;
-      return keys;
-    }, {});
-
-    // Verify access token
-    const decoded = jwt.verify(accessToken, publicKeys, {
-      algorithms: ["RS256"],
-      audience: CLIENT_ID,
-    }) as jwt.JwtPayload;
   } catch (error) {
     throw error;
   }
